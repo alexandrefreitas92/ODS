@@ -1,8 +1,21 @@
+# Library -----------------------------------------------------------------
+library(shiny)
+library(tidyverse)
+library(DT)
+library(shinydashboard)
+library(htmltools)
+
+
+# Data --------------------------------------------------------------------
+
+ods <- read.xlsx("data/ODS.xlsx")
+ods <- select(ods, Objetivo, Meta, Indicador)
+
 # Define the UI
 ui = tagList(
   navbarPage(
     # theme = "cerulean",  # <--- To use a theme, uncomment this
-    "shinythemes",
+    "ODS - MG",
     tabPanel("Página Inicial", "Aqui vai ter as imagens para escolher para qual painel a pessoa quer ir"),
     tabPanel("Programas",
              sidebarPanel(
@@ -33,14 +46,32 @@ ui = tagList(
                )
              )
     ),
-    tabPanel("ODS", "Tabela com os ODS"),
-    tabPanel("Sobre", "Informações sobre o Sistema de Monitoramento e link para o Github")
+    tabPanel("ODS", DT::dataTableOutput('ods')),
+    tabPanel("Sobre"),
+#    tabPanel(actionButton("github",
+#                           label = "Code",
+#                           icon = icon("github"),
+#                           onclick ="window.open(`https://github.com/howardbaik/nhl-pbp`, '_blank')"),
+#                           #style="color: #fff; background-color: #767676; border-color: #767676"),
+#              #data.step = 6,
+#              data.intro = "View Code"),
+    tabPanel("GitHub", icon = icon("fab fa-github"), href = "https://github.com/ods-sedese/bolsa-merenda", target="_blank")
   )
 )
 
 
 # Define the server code
 server = function(input, output) {
+  
+  output$ods <- renderDataTable(ods, 
+                                caption = 'Tabela 1: Tabela com a lista dos indicadores do ODS.',
+                                filter = 'top',
+                                options = list(
+                                  autowidth = FALSE,
+                                  pageLength = 1000
+                                  )
+                                )
+  
   output$txtout <- renderText({
     paste(input$txt, input$slider, format(input$date), sep = ", ")
   })
