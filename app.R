@@ -4,58 +4,48 @@ library(tidyverse)
 library(DT)
 library(shinydashboard)
 library(htmltools)
+library(openxlsx)
 
+
+# Load scripts ------------------------------------------------------------
+source("R/main_page.R")
+source("R/programas.R")
+source("R/painel_ods.R")
+source("R/github_link.R")
 
 # Data --------------------------------------------------------------------
 
 ods <- read.xlsx("data/ODS.xlsx")
 ods <- select(ods, Objetivo, Meta, Indicador)
 
-# Define the UI
+
+# Define UI ---------------------------------------------------------------
 ui = tagList(
   navbarPage(
-    # theme = "cerulean",  # <--- To use a theme, uncomment this
+    #> Title
     "ODS - MG",
-    tabPanel("Página Inicial", "Aqui vai ter as imagens para escolher para qual painel a pessoa quer ir"),
-    tabPanel("Programas",
-             sidebarPanel(
-               fileInput("file", "File input:"),
-               textInput("txt", "Text input:", "general"),
-               sliderInput("slider", "Slider input:", 1, 100, 30),
-               tags$h5("Default actionButton:"),
-               actionButton("action", "Search"),
-               
-               tags$h5("actionButton with CSS class:"),
-               actionButton("action2", "Action button", class = "btn-primary")
+# Página Inicial ----------------------------------------------------------
+    tabPanel("Página Inicial", 
+             main_page()
              ),
-             mainPanel(
-               tabsetPanel(
-                 tabPanel("Tab 1",
-                          h4("Table"),
-                          tableOutput("table"),
-                          h4("Verbatim text output"),
-                          verbatimTextOutput("txtout"),
-                          h1("Header 1"),
-                          h2("Header 2"),
-                          h3("Header 3"),
-                          h4("Header 4"),
-                          h5("Header 5")
-                 ),
-                 tabPanel("Tab 2", "This panel is intentionally left blank"),
-                 tabPanel("Tab 3", "This panel is intentionally left blank")
-               )
-             )
+# Painel com os Programas -------------------------------------------------
+    tabPanel("Programas",
+             programas()
+             ),
+
+# Painel ODS --------------------------------------------------------------
+    tabPanel("ODS",  
+      painel_ods()
     ),
-    tabPanel("ODS", DT::dataTableOutput('ods')),
-    tabPanel("Sobre"),
-#    tabPanel(actionButton("github",
-#                           label = "Code",
-#                           icon = icon("github"),
-#                           onclick ="window.open(`https://github.com/howardbaik/nhl-pbp`, '_blank')"),
-#                           #style="color: #fff; background-color: #767676; border-color: #767676"),
-#              #data.step = 6,
-#              data.intro = "View Code"),
-    tabPanel("GitHub", icon = icon("fab fa-github"), href = "https://github.com/ods-sedese/bolsa-merenda", target="_blank")
+
+# Painel Sobre ------------------------------------------------------------
+    tabPanel("Sobre",
+             about()
+             ),
+# Link Github -------------------------------------------------------------
+    tabPanel("GitHub",
+             github_link()
+             )
   )
 )
 
@@ -78,6 +68,17 @@ server = function(input, output) {
   output$table <- renderTable({
     head(cars, 4)
   })
+  out <- reactiveVal("Nothing")
+  observeEvent(input$goButton,{
+    out("Go Pushed")
+  })
+  observeEvent(input$reset_button,{
+    out("Resetted")
+  })
+  observeEvent(input$web_button,{
+    out("From the web")
+  })
+  output$text <- renderText({out()})
 }
 
 
