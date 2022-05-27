@@ -19,6 +19,7 @@ source("R/ui.R", local = TRUE)
 
 ods <- read.xlsx("data/ODS.xlsx")
 ods <- select(ods, Objetivo, Meta, Indicador)
+ods_vars <- unique(ods$Objetivo)
 
 # Define UI ---------------------------------------------------------------
 

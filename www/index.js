@@ -1,3 +1,4 @@
+// Function change tab
 const customHref = function(link){
 
         // find all links
@@ -15,6 +16,8 @@ const customHref = function(link){
         });
 }
 
+
+// Function scroll to target
 window.smoothScroll = function(target) {
     var scrollContainer = target;
     do { //find scroll container
@@ -37,11 +40,4 @@ window.smoothScroll = function(target) {
     // start scrolling
     scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
 }
-
-
-$("ods1_button").click(function() {
-    $('html,body').animate({
-        scrollTop: $("ods_table").offset().top},
-        'slow');
-});
 
