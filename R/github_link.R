@@ -1,5 +1,7 @@
 github_link <- function() {
   tagList(
-    icon = icon("fab fa-github"), href = "https://github.com/ods-sedese/bolsa-merenda", target="_blank"
+    tags$a(icon = icon("fab fa-github"), href="https://www.google.com", target="_blank")
   )
 }
+
+

@@ -1,10 +1,24 @@
 server <- function(input, output, session) {
+
+
+# Main Page ---------------------------------------------------------------
+
+  observeEvent(input$ir_tab_ods, {
+    updateTabsetPanel(session, "inTabset",
+                      selected = "ods_panel")
+  })
+  observeEvent(input$ir_tab_programs, {
+    updateTabsetPanel(session, "inTabset",
+                      selected = "programs_panel")
+  })  
+  
+# ODS Data Table ----------------------------------------------------------
   output$ods <- renderDataTable(ods, 
                                 caption = 'Tabela 1: Tabela com a lista dos indicadores do ODS.',
                                 filter = 'top',
                                 options = list(
-                                  autowidth = FALSE,
-                                  pageLength = 1000
+                                  autowidth = TRUE,
+                                  pageLength = 25
                                 )
   )
   
@@ -25,4 +39,12 @@ server <- function(input, output, session) {
     out("From the web")
   })
   output$text <- renderText({out()})
+
+# ODS Action Buttons ------------------------------------------------------
+  observeEvent(input$ods1_button, {
+    updateNavbarPage(session, "inTabset",
+                      selected = "ods_table")
+  })
+  
+  
 }
