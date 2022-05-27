@@ -13,14 +13,21 @@ server <- function(input, output, session) {
   })  
   
 # ODS Data Table ----------------------------------------------------------
-  output$ods <- renderDataTable(ods, 
-                                caption = 'Tabela 1: Tabela com a lista dos indicadores do ODS.',
-                                filter = 'top',
-                                options = list(
-                                  autowidth = TRUE,
-                                  pageLength = 25
-                                )
-  )
+  output$ods <- renderDataTable({
+    datatable(
+      ods,
+      caption = 'Tabela 1: Tabela com a lista dos indicadores do ODS.',
+      filter = 'top',
+      #rownames = FALSE,
+      options = list(
+        autowidth = FALSE,
+        pageLength = 25,
+        columnDefs = list(list(width = '20%', targets = 1), list(width = '40%', targets = c(2, 3)))
+        )
+      )# %>%
+      #filter()
+  }
+)
   
   output$txtout <- renderText({
     paste(input$txt, input$slider, format(input$date), sep = ", ")

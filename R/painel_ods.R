@@ -8,8 +8,8 @@ painel_ods <- function() {
       column(2,
           tags$button(
             id = "ods1_button",
-            class = "btn action-button",
-            tags$img(src = "images/ods/1.png", height="50%", width="50%", onclick="customHref('ods_table')")
+            class = "1btn action-button",
+            tags$img(src = "images/ods/1.png", height="50%", width="50%", onclick="smoothScroll(document.getElementById('ods_table'))")
             )
           ),
       column(2,
@@ -125,8 +125,12 @@ painel_ods <- function() {
 
 # Table -------------------------------------------------------------------
     fluidRow(
-      h2("Tabela com os indicadores do ODS"),
-      tags$a(DT::dataTableOutput('ods'), value = "ods_table"), 
+      column(10, offset = 1,
+        h2("Tabela com os indicadores do ODS"),
+        tags$a(DT::dataTableOutput('ods'), value = "ods_table"),
+        id = "ods_table", class = "ods_table"
+      )
+       
     )
   )
 }
