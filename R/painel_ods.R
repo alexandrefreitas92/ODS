@@ -12,7 +12,7 @@ painel_ods <- function() {
             id = "ods1_button",
             class = "btn action-button",
             tags$img(src = "images/ods/1.png", height="50%", width="50%"),
-            onclick="smoothScroll(document.getElementById('ods_table'))"
+            onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
             )
           ),
       column(2,
@@ -20,7 +20,7 @@ painel_ods <- function() {
                id = "ods2_button",
                class = "btn action-button",
                tags$img(src = "images/ods/2.png", height="50%", width="50%"),
-               onclick="smoothScroll(document.getElementById('ods_table'))"
+               onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
                ),
              ),
       column(2,
@@ -28,7 +28,7 @@ painel_ods <- function() {
                id = "ods3_button",
                class = "btn action-button",
                tags$img(src = "images/ods/3.png", height="50%", width="50%"),
-               onclick="smoothScroll(document.getElementById('ods_table'))"
+               onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
              ),
       ),
       column(2,
@@ -36,7 +36,7 @@ painel_ods <- function() {
                id = "ods4_button",
                class = "btn action-button",
                tags$img(src = "images/ods/4.png", height="50%", width="50%"),
-               onclick="smoothScroll(document.getElementById('ods_table'))"
+               onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
              ),
       ),
       column(2,
@@ -44,7 +44,7 @@ painel_ods <- function() {
                id = "ods5_button",
                class = "btn action-button",
                tags$img(src = "images/ods/5.png", height="50%", width="50%"),
-               onclick="smoothScroll(document.getElementById('ods_table'))"
+               onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
              ),
       ),
       column(2,
@@ -52,7 +52,7 @@ painel_ods <- function() {
                id = "ods6_button",
                class = "btn action-button",
                tags$img(src = "images/ods/6.png", height="50%", width="50%"),
-               onclick="smoothScroll(document.getElementById('ods_table'))"
+               onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
              ),
       ),
       fluidRow(
@@ -61,7 +61,7 @@ painel_ods <- function() {
                  id = "ods7_button",
                  class = "btn action-button",
                  tags$img(src = "images/ods/7.png", height="50%", width="50%"),
-                 onclick="smoothScroll(document.getElementById('ods_table'))"
+                 onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
                )
         ),
         column(2,
@@ -69,7 +69,7 @@ painel_ods <- function() {
                  id = "ods8_button",
                  class = "btn action-button",
                  tags$img(src = "images/ods/8.png", height="50%", width="50%"),
-                 onclick="smoothScroll(document.getElementById('ods_table'))"
+                 onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
                ),
         ),
         column(2,
@@ -77,7 +77,7 @@ painel_ods <- function() {
                  id = "ods9_button",
                  class = "btn action-button",
                  tags$img(src = "images/ods/9.png", height="50%", width="50%"),
-                 onclick="smoothScroll(document.getElementById('ods_table'))"
+                 onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
                ),
         ),
         column(2,
@@ -85,7 +85,7 @@ painel_ods <- function() {
                  id = "ods10_button",
                  class = "btn action-button",
                  tags$img(src = "images/ods/10.png", height="50%", width="50%"),
-                 onclick="smoothScroll(document.getElementById('ods_table'))"
+                 onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
                ),
         ),
         column(2,
@@ -93,7 +93,7 @@ painel_ods <- function() {
                  id = "ods11_button",
                  class = "btn action-button",
                  tags$img(src = "images/ods/11.png", height="50%", width="50%"),
-                 onclick="smoothScroll(document.getElementById('ods_table'))"
+                 onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
                ),
         ),
         column(2,
@@ -101,7 +101,7 @@ painel_ods <- function() {
                  id = "ods12_button",
                  class = "btn action-button",
                  tags$img(src = "images/ods/12.png", height="50%", width="50%"),
-                 onclick="smoothScroll(document.getElementById('ods_table'))"
+                 onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
                ),
         ),
       ),
@@ -111,7 +111,7 @@ painel_ods <- function() {
                  id = "ods13_button",
                  class = "btn action-button",
                  tags$img(src = "images/ods/13.png", height="50%", width="50%"),
-                 onclick="smoothScroll(document.getElementById('ods_table'))"
+                 onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
                ),
         ),
         column(2,
@@ -119,7 +119,7 @@ painel_ods <- function() {
                  id = "ods14_button",
                  class = "btn action-button",
                  tags$img(src = "images/ods/14.png", height="50%", width="50%"),
-                 onclick="smoothScroll(document.getElementById('ods_table'))"
+                 onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
                ),
         ),
         column(2,
@@ -127,7 +127,7 @@ painel_ods <- function() {
                  id = "ods15_button",
                  class = "btn action-button",
                  tags$img(src = "images/ods/15.png", height="50%", width="50%"),
-                 onclick="smoothScroll(document.getElementById('ods_table'))"
+                 onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
                ),
         ),
         column(2,
@@ -135,7 +135,7 @@ painel_ods <- function() {
                  id = "ods16_button",
                  class = "btn action-button",
                  tags$img(src = "images/ods/16.png", height="50%", width="50%"),
-                 onclick="smoothScroll(document.getElementById('ods_table'))"
+                 onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
                ),
         ),
         column(2,
@@ -143,7 +143,7 @@ painel_ods <- function() {
                  id = "ods17_button",
                  class = "btn action-button",
                  tags$img(src = "images/ods/17.png", height="50%", width="50%"),
-                 onclick="smoothScroll(document.getElementById('ods_table'))"
+                 onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
                ),
         ),
         column(2,
@@ -151,7 +151,7 @@ painel_ods <- function() {
                  id = "odsGeral_button",
                  class = "btn action-button",
                  tags$img(src = "images/ods/quadro-indicadores.png"),
-                 onclick="smoothScroll(document.getElementById('ods_table'))"
+                 onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
                ),
         ),
       )

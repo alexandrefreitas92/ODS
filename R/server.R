@@ -14,23 +14,12 @@ server <- function(input, output, session) {
   
 
   
-  output$txtout <- renderText({
-    paste(input$txt, input$slider, format(input$date), sep = ", ")
+
+# Programs ----------------------------------------------------------------
+
+  output$name <- renderText({
+    input$name
   })
-  output$table <- renderTable({
-    head(cars, 4)
-  })
-  out <- reactiveVal("Nothing")
-  observeEvent(input$goButton,{
-    out("Go Pushed")
-  })
-  observeEvent(input$reset_button,{
-    out("Resetted")
-  })
-  observeEvent(input$web_button,{
-    out("From the web")
-  })
-  output$text <- renderText({out()})
 
 # ODS Action Buttons ------------------------------------------------------
   observeEvent(input$ods1_button, {
@@ -105,4 +94,28 @@ server <- function(input, output, session) {
       )
     }
   )
+  
+  # Programas Data Table ---------------------------------------------------------- 
+  prog_vars <- reactiveValues(vars = prog$nome_do_programa, selected = prog$nome_do_programa)
+  
+  output$prog <- renderDataTable({
+    datatable(
+      prog,
+      caption = 'Tabela 2: Tabela com a lista dos Programas.',
+      filter = 'top',
+      #rownames = FALSE,
+      options = list(
+        autowidth = FALSE,
+        pageLength = 25
+      )
+    )
+  })
+  
+
+# Github link -------------------------------------------------------------
+
+  url <- a("Google Homepage", href="https://www.google.com/")
+  output$GitHub <- renderUI({
+    tagList("URL link:", url)
+  })
 }
