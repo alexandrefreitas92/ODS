@@ -208,8 +208,10 @@ server <- function(input, output, session) {
   
 
 # Programas - ODS ---------------------------------------------------------
+  
+  #> ODS 1
   output$program_ods1 <- renderImage({
-    ods1 <- "1 - Erradicação da Pobreza"
+    ods1 <- "Objetivo 1 - Erradicação da Pobreza"
     if (req(input$selectProgram != "Escolha aqui o Programa")){
       programa_ods <- filter(prog, `Nome do Programa` == input$selectProgram)
       if(req(ods1 %in% programa_ods$ODS)) {
@@ -219,9 +221,38 @@ server <- function(input, output, session) {
              alt="Test")
       }
     }
+  }, deleteFile = FALSE)
+  outputOptions(output, "program_ods1", suspendWhenHidden = FALSE)
+  
+  #> ODS 2
+  output$program_ods2 <- renderImage({
+    ods2 <- "Objetivo 2 - Fome Zero e Agricultura Sustentável"
+    if (req(input$selectProgram != "Escolha aqui o Programa")){
+      programa_ods <- filter(prog, `Nome do Programa` == input$selectProgram)
+      if(req(ods2 %in% programa_ods$ODS)) {
+        list(src = "www/images/ods/2.png",
+             height="100", 
+             width="100",
+             alt="Test")
+      } else {return(NULL)}
+    } else {return(NULL)}
     
   }, deleteFile = FALSE)
   
+  #> ODS 3
+  output$program_ods3 <- renderImage({
+    ods3 <- "Objetivo 3 - Boa Saúde e Bem-Estar"
+    if (req(input$selectProgram != "Escolha aqui o Programa")){
+      programa_ods <- filter(prog, `Nome do Programa` == input$selectProgram)
+      if(req(ods3 %in% programa_ods$ODS)) {
+        list(src = "www/images/ods/3.png",
+             height="100", 
+             width="100",
+             alt="Test")
+      }
+    }
+    
+  }, deleteFile = FALSE)
 
 # Program - ODS Modal Table -----------------------------------------------
 

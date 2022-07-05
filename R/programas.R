@@ -23,9 +23,15 @@ painel_prog <- function(df_programas) {
 #        textOutput("textProgramODS")
       ),
       fluidRow(
-        tags$p(tags$strong("Objetivos de Desenvolvimento Sustentável vinculados ao Programa: ")),
-        actionButton("program_ods_indicators", "Abrir lista de indicadores dos ODS vinculados", class = "btn-succe1ss"),
-        imageOutput("program_ods1"),
+        fluidRow(
+          tags$p(tags$strong("Objetivos de Desenvolvimento Sustentável vinculados ao Programa: "))),
+        fluidRow(
+          actionButton("program_ods_indicators", "Abrir lista de indicadores dos ODS vinculados", class = "btn-succe1ss")),
+        fluidRow(
+          column(1, imageOutput("program_ods1")),
+          column(1, conditionalPanel(condition = "!is.null(output.program_ods1)",imageOutput("program_ods2"))),
+          column(1, imageOutput("program_ods3"))
+        )
 #        bsModal("modalOds", "Tabela com os indicadores do ODS vinculados ao Programa", "program_ods_indicators",
 #                DT::dataTableOutput("ods_table_modal"),
 #                size = "large")
