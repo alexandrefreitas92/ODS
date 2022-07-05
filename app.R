@@ -16,7 +16,7 @@ source("R/main_page.R")
 source("R/programas.R")
 source("R/painel_ods.R")
 source("R/github_link.R")
-source("server.R", local = TRUE)
+source("R/server.R", local = TRUE)
 source("ui.R", local = TRUE)
 
 options(scipen = 999)  
