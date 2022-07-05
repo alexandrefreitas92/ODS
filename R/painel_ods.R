@@ -7,53 +7,55 @@ painel_ods <- function() {
       p("Selecione um dos indicadores abaixo")
     ),
     fluidRow(
-      column(2,
-          tags$button(
-            id = "ods1_button",
-            class = "btn action-button",
-            tags$img(src = "images/ods/1.png", height="50%", width="50%"),
-            onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
-            )
-          ),
-      column(2,
-             tags$button(
-               id = "ods2_button",
-               class = "btn action-button",
-               tags$img(src = "images/ods/2.png", height="50%", width="50%"),
-               onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
+      fluidRow(
+        column(2,
+            tags$button(
+              id = "ods1_button",
+              class = "btn action-button",
+              tags$img(src = "images/ods/1.png", height="50%", width="50%"),
+              onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
+              )
+            ),
+        column(2,
+               tags$button(
+                 id = "ods2_button",
+                 class = "btn action-button",
+                 tags$img(src = "images/ods/2.png", height="50%", width="50%"),
+                 onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
+                 ),
                ),
-             ),
-      column(2,
-             tags$button(
-               id = "ods3_button",
-               class = "btn action-button",
-               tags$img(src = "images/ods/3.png", height="50%", width="50%"),
-               onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
-             ),
-      ),
-      column(2,
-             tags$button(
-               id = "ods4_button",
-               class = "btn action-button",
-               tags$img(src = "images/ods/4.png", height="50%", width="50%"),
-               onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
-             ),
-      ),
-      column(2,
-             tags$button(
-               id = "ods5_button",
-               class = "btn action-button",
-               tags$img(src = "images/ods/5.png", height="50%", width="50%"),
-               onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
-             ),
-      ),
-      column(2,
-             tags$button(
-               id = "ods6_button",
-               class = "btn action-button",
-               tags$img(src = "images/ods/6.png", height="50%", width="50%"),
-               onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
-             ),
+        column(2,
+               tags$button(
+                 id = "ods3_button",
+                 class = "btn action-button",
+                 tags$img(src = "images/ods/3.png", height="50%", width="50%"),
+                 onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
+               ),
+        ),
+        column(2,
+               tags$button(
+                 id = "ods4_button",
+                 class = "btn action-button",
+                 tags$img(src = "images/ods/4.png", height="50%", width="50%"),
+                 onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
+               ),
+        ),
+        column(2,
+               tags$button(
+                 id = "ods5_button",
+                 class = "btn action-button",
+                 tags$img(src = "images/ods/5.png", height="50%", width="50%"),
+                 onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
+               ),
+        ),
+        column(2,
+               tags$button(
+                 id = "ods6_button",
+                 class = "btn action-button",
+                 tags$img(src = "images/ods/6.png", height="50%", width="50%"),
+                 onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
+               )
+        )
       ),
       fluidRow(
         column(2,
@@ -144,21 +146,22 @@ painel_ods <- function() {
                  class = "btn action-button",
                  tags$img(src = "images/ods/17.png", height="50%", width="50%"),
                  onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
+                 ),
                ),
-        ),
         column(2,
                tags$button(
                  id = "odsGeral_button",
                  class = "btn action-button",
-                 tags$img(src = "images/ods/quadro-indicadores.png"),
+                 tags$img(src = "images/ods/quadro-indicadores2.png", height="50%", width="50%"),
                  onclick="setTimeout(() => {smoothScroll(document.getElementById('ods_table'));}, 500);"
+                 )
                ),
-        ),
-      )
+        )
     ),
 
 # Table -------------------------------------------------------------------
     fluidRow(
+      hr(),
       column(10, offset = 1,
         h2("Tabela com os indicadores do ODS"),
         tags$a(DT::dataTableOutput('ods'), value = "ods_table"),

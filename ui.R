@@ -3,11 +3,14 @@ ui <- function() {
     #> Include js script
     tags$head(
       tags$script(src="index.js"),
-      tags$script(src="navAppend.js")
+      tags$script(src="navAppend.js"),
+      tags$link(rel = "stylesheet", type = "text/css", href = "styles.css"),
+      tags$link(rel="stylesheet", type = "text/css",
+                href = "font-awesome.min.css")
     ),
     
     navbarPage(
-      theme = bs_theme(bootswatch = "flatly"),
+    #  theme = bs_theme(bootswatch = "flatly"),
       #> Title
       "ODS - MG",
       id = "inTabset",
@@ -20,7 +23,7 @@ ui <- function() {
       
       # Panel with Public policy programs -------------------------------------------------
       tabPanel("Programas",
-               painel_prog(),
+               painel_prog(prog),
                value = "programs_panel"
       ),
       
@@ -36,12 +39,9 @@ ui <- function() {
                value = "about_panel"
       ),
       # Link Github -------------------------------------------------------------
-      tabPanel(
-               "Github",
-               #tags$a(onclick="window.open('http://www.google.com', '_blank')", icon = icon("fab fa-github"), "GitHub"),
-               github_link(),
-               value = 'github_panel'
+      footer = div(class = "footer",
+                      includeHTML("html/footer.html")
       )
-    )
+      )
   )
 }

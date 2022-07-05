@@ -7,7 +7,8 @@ library(htmltools)
 library(openxlsx)
 library(bslib)
 library(lubridate)
-library(rio)
+library(scales)
+library(shinyBS)
 
 
 # Load scripts ------------------------------------------------------------
@@ -15,43 +16,53 @@ source("R/main_page.R")
 source("R/programas.R")
 source("R/painel_ods.R")
 source("R/github_link.R")
-source("R/server.R", local = TRUE)
-source("R/ui.R", local = TRUE)
+source("server.R", local = TRUE)
+source("ui.R", local = TRUE)
 
+options(scipen = 999)  
 # Data --------------------------------------------------------------------
 
 ods <- read.xlsx("data/ODS.xlsx")
 ods <- select(ods, Objetivo, Meta, Indicador)
 ods_vars <- unique(ods$Objetivo)
+ods_numbers <- as.data.frame(ods_vars) %>%
+  mutate(ods_numbers = str_remove_all(ods_vars, "[^0-9]"))
 
-prog <- rio::import("data/programas.xlsx") %>% 
-  janitor::clean_names() %>% 
-  select(nome_do_programa,
-         objetivo,
-         justificativa,
-         unidade_administrativa_responsavel_pelo_programa,
-         previsao_orcamentaria_2022,
-         titulo_do_objetivo_de_desenvolvimento_sustentavel,
-         area_tematica) %>% 
-  group_by_all() %>% 
-  count() %>%
-  rename('Nome do programa' = nome_do_programa,
-         'Objetivo' = objetivo,
-         'Justificativa' = justificativa,
-         'Unidade Administrativa responsável' = unidade_administrativa_responsavel_pelo_programa,
-         'Previsão orçamentária (2022)' = previsao_orcamentaria_2022,
-         'ODS' = titulo_do_objetivo_de_desenvolvimento_sustentavel,
-         'Área Temática' = area_tematica)
+#> Lista geral de ODS por Programa
+prog <- read.xlsx("data/programas_clean.xlsx", sep.names = " ")
 
-prog$`Nome do programa` <- gsub("#","",prog$`Nome do programa`)
+prog_ods <- prog %>%
+  group_by(`Código do Programa`, `Nome do Programa`) %>%
+  summarise(ODS = str_flatten(ODS, collapse = "; "))
 
-columns <- c('Nome do programa', 'Objetivo', 'Justificativa', 'Unidade Administrativa responsável', 'Unidade Administrativa responsável', 'Previsão orçamentária (2022)', 'ODS', 'Área Temática')
+row.names(prog) <- 1:nrow(prog)
 
-prog <- prog %>%
-  mutate_at(vars(columns), funs(stringr::str_to_sentence(.)))
+#> Lista geral dos Programas
+prog_list <- prog %>%
+  group_by(`Código do Programa`, `Nome do Programa`) %>%
+  summarise(`Órgão Responsável pelo Programa` = first(`Órgão Responsável pelo Programa`), 
+            `Previsão Orçamentária 2022` = first(`Previsão Orçamentária 2022`),
+            Objetivo = first(Objetivo)) %>%
+  mutate(`Previsão Orçamentária 2022` = format(`Previsão Orçamentária 2022`, big.mark = ".", decimal.mark = ","),
+         `Previsão Orçamentária 2022` = paste("R$", `Previsão Orçamentária 2022`))
 
-#prog <- read.xlsx("data/programas.xlsx", sep.names = " ")
-#prog <- select(prog, `Nome do Programa`, Objetivo, Justificativa, `Unidade Administrativa Responsável pelo Programa`, `Previsão Orçamentária 2022`, `Título do Objetivo de Desenvolvimento Sustentável`)
+#> Lista geral dos indicadores por Programa
+indicadores <- read.xlsx("data/indicadores_planejamento.xlsx", sep.names = " ") %>%
+  mutate(across(c(2, 4), str_to_sentence)) %>%
+  group_by(`Código do Programa`, `Nome do Programa`) %>%
+  summarise(Indicador = paste(seq_along(Indicador), "-", Indicador, sep = " ")) %>%
+  summarise(Indicador = str_flatten(Indicador, collapse = ". "))
+
+#  summarise(Indicador = str_flatten(Indicador, collapse = "; "))
+
+#> Lista geral das açoes
+acoes <- read.xlsx("data/acoes_planejamento.xlsx", sep.names = " ") %>%
+  select(1,2, `Título da Ação`, 39:46) %>%
+  mutate(across(2:3, str_to_sentence))
+
+
+#> Programa, Unidade, Indicador, ODS Vinculado, Orçamento, Tabela com ação e orçamento das ações
+
 
 # Define UI ---------------------------------------------------------------
 

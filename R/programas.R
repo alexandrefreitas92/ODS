@@ -1,15 +1,39 @@
 # Function ----------------------------------------------------------------
-painel_prog <- function() {
+painel_prog <- function(df_programas) {
   tagList(
     sidebarPanel(
+      h2("Filtre a informação desejada"),
       # Create a select list
-      selectInput(inputId = "name", 
-                  label = "Name",
-                  choices = prog$ODS
+      selectInput(inputId = "selectOrgao", 
+                  label = "Lista dos Órgãos",
+                  choices = c("Escolha aqui o Órgão", sort(unique(df_programas$`Órgão Responsável pelo Programa`)))
+      ),
+      selectInput(inputId = "selectProgram", 
+                  label = "Lista dos Programas",
+                  choices = c("Escolha aqui o Programa", sort(unique(df_programas$`Nome do Programa`)))
       )
     ),
     mainPanel(
-      textOutput("name")
+      fluidRow(
+        tags$p(tags$strong("Órgão resonsável pelo Programa: "), textOutput("textUnidadeName", inline = TRUE)),
+        tags$p(tags$strong("Nome do Programa: "), textOutput("textProgramName", inline = TRUE)),
+        tags$p(tags$strong("Orçamento do Programa: "), textOutput("textProgramOrcament", inline = TRUE)),
+        tags$p(tags$strong("Objetivo do Programa: "), textOutput("textProgramObjective", inline = TRUE)),
+        tags$p(tags$strong("Indicadores do Programa: "), textOutput("textProgramIndicators", inline = TRUE))#,
+#        textOutput("textProgramODS")
+      ),
+      fluidRow(
+        tags$p(tags$strong("Objetivos de Desenvolvimento Sustentável vinculados ao Programa: ")),
+        actionButton("program_ods_indicators", "Abrir lista de indicadores dos ODS vinculados", class = "btn-succe1ss"),
+        imageOutput("program_ods1"),
+#        bsModal("modalOds", "Tabela com os indicadores do ODS vinculados ao Programa", "program_ods_indicators",
+#                DT::dataTableOutput("ods_table_modal"),
+#                size = "large")
+ #       style = "height:200px"
+      ),
+      fluidRow(
+        DT::dataTableOutput("table_acoes")
+        )
     )
   )
 }
