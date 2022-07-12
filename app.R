@@ -23,14 +23,51 @@ options(scipen = 999)
 # Data --------------------------------------------------------------------
 
 ods <- read.xlsx("data/ODS.xlsx")
-ods <- select(ods, Objetivo, Meta, Indicador)
+ods <- ods %>%
+  select(Objetivo, Meta, Indicador) %>%
+  mutate(Objetivo = factor(Objetivo,
+                           levels = c("Objetivo 1 - Erradicação da Pobreza", "Objetivo 2 - Fome Zero e Agricultura Sustentável",
+                                      "Objetivo 3 - Boa Saúde e Bem-Estar", "Objetivo 4 - Educação de Qualidade",
+                                      "Objetivo 5 - Igualdade de Gênero", "Objetivo 6 - Água Potável e Saneamento",
+                                      "Objetivo 7 - Energia Limpa e Acessível", "Objetivo 8 - Emprego Decente e Crescimento Econômico",
+                                      "Objetivo 9 - Indústria, Inovação e Infraestrutura", "Objetivo 10 - Redução das Desigualdades",
+                                      "Objetivo 11 - Cidades e Comunidades Sustentáveis", "Objetivo 12 - Consumo e Produção Responsáveis",
+                                      "Objetivo 13 - Ação Contra a Mudança Global do Clima", "Objetivo 14 - Vida na Água",
+                                      "Objetivo 15 - Vida Terrestre", "Objetivo 16 - Paz, Justiça e Instituições Eficazes", "Objetivo 17 - Parcerias e Meios de Implementação"),
+                           labels = c("Objetivo 1 - Erradicação da Pobreza", "Objetivo 2 - Fome Zero e Agricultura Sustentável",
+                                      "Objetivo 3 - Boa Saúde e Bem-Estar", "Objetivo 4 - Educação de Qualidade",
+                                      "Objetivo 5 - Igualdade de Gênero", "Objetivo 6 - Água Potável e Saneamento",
+                                      "Objetivo 7 - Energia Limpa e Acessível", "Objetivo 8 - Emprego Decente e Crescimento Econômico",
+                                      "Objetivo 9 - Indústria, Inovação e Infraestrutura", "Objetivo 10 - Redução das Desigualdades",
+                                      "Objetivo 11 - Cidades e Comunidades Sustentáveis", "Objetivo 12 - Consumo e Produção Responsáveis",
+                                      "Objetivo 13 - Ação Contra a Mudança Global do Clima", "Objetivo 14 - Vida na Água",
+                                      "Objetivo 15 - Vida Terrestre", "Objetivo 16 - Paz, Justiça e Instituições Eficazes", "Objetivo 17 - Parcerias e Meios de Implementação")))
 ods_vars <- unique(ods$Objetivo)
 ods_numbers <- as.data.frame(ods_vars) %>%
   mutate(ods_numbers = str_remove_all(ods_vars, "[^0-9]"))
 
 #> Lista geral de ODS por Programa
-prog <- read.xlsx("data/programas_clean.xlsx", sep.names = " ")
+prog <- read.xlsx("data/programas_clean.xlsx", sep.names = " ") %>%
+  mutate(ODS = factor(ODS, 
+                      levels = c("Objetivo 1 - Erradicação da Pobreza", "Objetivo 2 - Fome Zero e Agricultura Sustentável",
+                                 "Objetivo 3 - Boa Saúde e Bem-Estar", "Objetivo 4 - Educação de Qualidade",
+                                 "Objetivo 5 - Igualdade de Gênero", "Objetivo 6 - Água Potável e Saneamento",
+                                 "Objetivo 7 - Energia Limpa e Acessível", "Objetivo 8 - Emprego Decente e Crescimento Econômico",
+                                 "Objetivo 9 - Indústria, Inovação e Infraestrutura", "Objetivo 10 - Redução das Desigualdades",
+                                 "Objetivo 11 - Cidades e Comunidades Sustentáveis", "Objetivo 12 - Consumo e Produção Responsáveis",
+                                 "Objetivo 13 - Ação Contra a Mudança Global do Clima", "Objetivo 14 - Vida na Água",
+                                 "Objetivo 15 - Vida Terrestre", "Objetivo 16 - Paz, Justiça e Instituições Eficazes", "Objetivo 17 - Parcerias e Meios de Implementação"),
+                      labels = c("Objetivo 1 - Erradicação da Pobreza", "Objetivo 2 - Fome Zero e Agricultura Sustentável",
+                                 "Objetivo 3 - Boa Saúde e Bem-Estar", "Objetivo 4 - Educação de Qualidade",
+                                 "Objetivo 5 - Igualdade de Gênero", "Objetivo 6 - Água Potável e Saneamento",
+                                 "Objetivo 7 - Energia Limpa e Acessível", "Objetivo 8 - Emprego Decente e Crescimento Econômico",
+                                 "Objetivo 9 - Indústria, Inovação e Infraestrutura", "Objetivo 10 - Redução das Desigualdades",
+                                 "Objetivo 11 - Cidades e Comunidades Sustentáveis", "Objetivo 12 - Consumo e Produção Responsáveis",
+                                 "Objetivo 13 - Ação Contra a Mudança Global do Clima", "Objetivo 14 - Vida na Água",
+                                 "Objetivo 15 - Vida Terrestre", "Objetivo 16 - Paz, Justiça e Instituições Eficazes", "Objetivo 17 - Parcerias e Meios de Implementação")))
 
+ods_lista<-prog %>%
+  distinct(ODS)
 prog_ods <- prog %>%
   group_by(`Código do Programa`, `Nome do Programa`) %>%
   summarise(ODS = str_flatten(ODS, collapse = "; "))

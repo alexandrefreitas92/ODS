@@ -35,7 +35,8 @@ ui <- function() {
       
       # About ------------------------------------------------------------
       tabPanel("Sobre",
-               about(),
+               column(6, offset = 3,
+                      includeMarkdown("R/about.md")),
                value = "about_panel"
       ),
       # Link Github -------------------------------------------------------------

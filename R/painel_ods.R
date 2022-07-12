@@ -3,8 +3,8 @@ painel_ods <- function() {
     
 # ODS Buttons -------------------------------------------------------------
     fluidRow(
-      h2("Indicadores Brasileiros para os Objetivos de Desenvolvimento Sustentável "),
-      p("Selecione um dos indicadores abaixo")
+      h2("Indicadores Brasileiros para os Objetivos de Desenvolvimento Sustentável", style = "text-align: center;"),
+      p("Selecione um dos indicadores abaixo", style = "text-align: center;")
     ),
     fluidRow(
       fluidRow(
