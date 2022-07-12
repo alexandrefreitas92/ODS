@@ -17,6 +17,7 @@ painel_prog <- function(df_programas) {
         tags$p(tags$strong("Órgão resonsável pelo Programa: "), textOutput("textUnidadeName", inline = TRUE)),
         tags$p(tags$strong("Nome do Programa: "), textOutput("textProgramName", inline = TRUE)),
         tags$p(tags$strong("Orçamento do Programa: "), textOutput("textProgramOrcament", inline = TRUE)),
+        tags$p(tags$strong("Objetivo Estratégico do Programa: "), textOutput("textProgramObjectiveEstrategic", inline = TRUE)),
         tags$p(tags$strong("Objetivo do Programa: "), textOutput("textProgramObjective", inline = TRUE)),
         tags$p(tags$strong("Indicadores do Programa: "), textOutput("textProgramIndicators", inline = TRUE)),
         tags$p(tags$strong("Objetivos de Desenvolvimento Sustentável vinculados ao Programa: ")),
@@ -24,6 +25,7 @@ painel_prog <- function(df_programas) {
         bsModal("modalOds", "Tabela com os indicadores do ODS vinculados ao Programa", "program_ods_indicators",
                 DT::dataTableOutput("ods_table_modal"),
                 size = "large"),
+        hr(),
         conditionalPanel(condition = "output.test_ods1 == 'TRUE'", column(1, uiOutput("program_ods1"))),
         conditionalPanel(condition = "output.test_ods2 == 'TRUE'", column(1, uiOutput("program_ods2"))),
         conditionalPanel(condition = "output.test_ods3 == 'TRUE'", column(1, uiOutput("program_ods3"))),
@@ -41,65 +43,8 @@ painel_prog <- function(df_programas) {
         conditionalPanel(condition = "output.test_ods15 == 'TRUE'", column(1, uiOutput("program_ods15"))),
         conditionalPanel(condition = "output.test_ods16 == 'TRUE'", column(1, uiOutput("program_ods16"))),
         conditionalPanel(condition = "output.test_ods17 == 'TRUE'", column(1, uiOutput("program_ods17"))),
-#        fluidRow(
-          
-#          conditionalPanel(condition = "output.test1 == 'Sim')", column(1, uiOutput("program_ods1"))),
-#          conditionalPanel(condition = "input.selectProgram %in% filter(prog, `Nome do Programa` == input.selectProgram & ODS == 'Objetivo 1 - Erradicação da Pobreza')", column(1, uiOutput("program_ods1"))),
-#          conditionalPanel(condition = "input.selectProgram %in% filter(prog, `Nome do Programa` == input.selectProgram & ODS == 'Objetivo 2 - Fome Zero e Agricultura Sustentável')", column(1, imageOutput("program_ods2"))),
-#        ),
-#          column(1, imageOutput("program_ods1")),
-#          column(1, conditionalPanel(condition = "!is.null(output.program_ods1)",imageOutput("program_ods2"))),
-#          column(1, imageOutput("program_ods2"))
-#        ),
         DT::dataTableOutput("table_acoes")
-#       style = "height:200px"
     )
   )
 
 }
-
-
-#    fluidRow(
-#      h2("Programas"),
-#      p("Selecione um dos indicadores abaixo")
-#    ),
-#    fluidRow(
-#      h2("Tabela com a lista dos Programas."),
-#      tags$a(DT::dataTableOutput('prog'), value = "prog_table"),
-#      id = "prog_table", class = "prog_table"
-#    )
-#  )
-
-# Subfunctions --------------------------------------------------------
-# programas_sidebarPanel <- function() {
-#   sidebarPanel(
-#     fileInput("file", "File input:"),
-#     textInput("txt", "Text input:", "general"),
-#     sliderInput("slider", "Slider input:", 1, 100, 30),
-#     tags$h5("Default actionButton:"),
-#     actionButton("action", "Search"),
-#     
-#     tags$h5("actionButton with CSS class:"),
-#     actionButton("action2", "Action button", class = "btn-primary")
-#   )
-# }
-# 
-# programas_mainPanel <- function() {
-#   mainPanel(
-#     tabsetPanel(
-#       tabPanel("Tab 1",
-#                h4("Table"),
-#                tableOutput("table"),
-#                h4("Verbatim text output"),
-#                verbatimTextOutput("txtout"),
-#                h1("Header 1"),
-#                h2("Header 2"),
-#                h3("Header 3"),
-#                h4("Header 4"),
-#                h5("Header 5")
-#       ),
-#       tabPanel("Tab 2", "This panel is intentionally left blank"),
-#       tabPanel("Tab 3", "This panel is intentionally left blank")
-#     )
-#   )
-# }

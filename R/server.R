@@ -115,18 +115,20 @@ server <- function(input, output, session) {
         )
       } else {
         datatable(
-          select(filter(acoes, `Nome do Programa` == input$selectProgram), -c(1,2)),
+          select(filter(acoes, `Nome do Programa` == input$selectProgram), -1),
           caption = 'Tabela 1: Tabela com a lista das ações do Programa selecionado.',
           rownames = FALSE,
-          extensions = 'Scroller', 
+          #extensions = 'Scroller', 
           options = list(
-            deferRender = TRUE,
-            scrollX = 200,
-            scroller = TRUE
+            autowidth = TRUE,
+            columnDefs = list(list(width = "25%", targets = 1),list(width = "45%", targets = 2))
+           # deferRender = TRUE,
+            #scrollX = 200,
+            #scroller = TRUE
           )
         ) %>%
-          formatCurrency(2:5, currency = "R$", mark = ".", dec.mark = ",") %>%
-          formatRound(6:9, mark = ".", dec.mark = ",", digits = 0)
+          formatCurrency(4, currency = "R$", mark = ".", dec.mark = ",") %>%
+          formatRound(5, mark = ".", dec.mark = ",", digits = 0)
       }
   })
   
@@ -176,14 +178,14 @@ server <- function(input, output, session) {
     paste0(txt_orcament)
   })
   
-  output$textProgramOrcament <- renderText({ 
+  output$textProgramObjectiveEstrategic <- renderText({ 
     if (input$selectProgram == "Escolha aqui o Programa") {
-      txt_orcament <- "Selecione o Programa ao lado."       
+      txt_objective_estrategic <- "Selecione o Programa ao lado."       
     } else {
-      txt_orcament <- filter(prog_list, `Nome do Programa` == input$selectProgram)
-      txt_orcament <- txt_orcament$`Previsão Orçamentária 2022`
+      txt_objective_estrategic <- filter(prog_list, `Nome do Programa` == input$selectProgram)
+      txt_objective_estrategic <- txt_objective_estrategic$`Objetivo Estratégico`
     }
-    paste0(txt_orcament)
+    paste0(txt_objective_estrategic)
   })
   
   output$textProgramObjective <- renderText({ 
@@ -285,8 +287,6 @@ server <- function(input, output, session) {
   output$test_ods16 <- renderText({validacao$ods16})
   output$test_ods17 <- renderText({validacao$ods17})
   
- # outputOptions(output, c("test_ods1", "test_ods2", "test_ods3", "test_ods4", "test_ods5",
-#                          "test_ods6", "test_ods7", "test_ods8", "test_ods9", "test_ods10"), suspendWhenHidden = FALSE)
   outputOptions(output, "test_ods1", suspendWhenHidden = FALSE)
   outputOptions(output, "test_ods2", suspendWhenHidden = FALSE)
   outputOptions(output, "test_ods3", suspendWhenHidden = FALSE)
@@ -306,15 +306,6 @@ server <- function(input, output, session) {
   outputOptions(output, "test_ods17", suspendWhenHidden = FALSE)
   
   
-  
-  
-#  observeEvent(input$selectProgram, {
-#    if (input$selectProgram %in% filter(prog, `Nome do Programa` == input$selectProgram & ODS == 'Objetivo 2 - Fome Zero e Agricultura Sustentável')) {
-#      validacao$ods2 <- TRUE 
-#    } else {validacao$ods2 <- FALSE}
-#  })
-#  output$test2 <- renderText({validacao$ods2})
-
   output$program_ods1 <- renderUI({
     tags$div(img(src = "images/ods/1.png",
                  height="100", 
@@ -401,19 +392,6 @@ server <- function(input, output, session) {
                  width="100"))
   })
   
-  #> ODS 1
-  output$program_ods1x <- renderImage({
-    ods1 <- "Objetivo 1 - Erradicação da Pobreza"
-    if (req(input$selectProgram != "Escolha aqui o Programa")){
-      programa_ods <- filter(prog, `Nome do Programa` == input$selectProgram)
-      if(req(ods1 %in% programa_ods$ODS)) {
-        list(src = "www/images/ods/1.png",
-             height="100", 
-             width="100",
-             alt="Test")
-      }
-    }
-  }, deleteFile = FALSE)
 
   # Program - ODS Modal Table -----------------------------------------------
   data_ods_table_modal_filtered <- eventReactive(input$modalOds, {
@@ -437,13 +415,7 @@ server <- function(input, output, session) {
 
 # Frame -------------------------------------------------------------------
 
-  output$frame <- renderUI({
-    forms <- "https://docs.google.com/forms/d/e/1FAIpQLSf1VOg8CtPaVbBjI_ISAnEAAqxmOr9zdhqEiqx3vZw2zsVzKA/viewform"
-    my_test <- tags$iframe(src=forms, height=600, width=535)
-    print(my_test)
-    my_test
-  })  
-  
+
 # Github link -------------------------------------------------------------
 
   url <- a("Google Homepage", href="https://www.google.com/")

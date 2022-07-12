@@ -74,14 +74,27 @@ prog_ods <- prog %>%
 
 row.names(prog) <- 1:nrow(prog)
 
+#> Objetivos estrategicos dos Programas
+prog_obj_est <- prog %>%
+  mutate(`Objetivo Estratégico` = ifelse(`Objetivo Estratégico` == "NÃO HÁ OBJETIVO ESTRATÉGICO VINCULADO.", NA, `Objetivo Estratégico`)) %>%
+  group_by(`Código do Programa`, `Nome do Programa`) %>%
+  filter(!duplicated(`Objetivo Estratégico`)) %>%
+  summarise(`Objetivo Estratégico` = paste(seq_along(`Objetivo Estratégico`), "-", `Objetivo Estratégico`, sep = " ")) %>%
+  summarise(`Objetivo Estratégico` = str_flatten(`Objetivo Estratégico`, collapse = " ")) %>%
+  mutate(`Objetivo Estratégico` = ifelse(str_detect(`Objetivo Estratégico`, "1 - NA"), "NÃO HÁ OBJETIVO ESTRATÉGICO VINCULADO.", `Objetivo Estratégico`))
+  
 #> Lista geral dos Programas
 prog_list <- prog %>%
   group_by(`Código do Programa`, `Nome do Programa`) %>%
   summarise(`Órgão Responsável pelo Programa` = first(`Órgão Responsável pelo Programa`), 
             `Previsão Orçamentária 2022` = first(`Previsão Orçamentária 2022`),
-            Objetivo = first(Objetivo)) %>%
+            Objetivo = first(Objetivo)
+            ) %>%
   mutate(`Previsão Orçamentária 2022` = format(`Previsão Orçamentária 2022`, big.mark = ".", decimal.mark = ","),
-         `Previsão Orçamentária 2022` = paste("R$", `Previsão Orçamentária 2022`))
+         `Previsão Orçamentária 2022` = paste("R$", `Previsão Orçamentária 2022`)
+         ) %>%
+  left_join(prog_obj_est, by = c("Código do Programa", "Nome do Programa"))
+
 
 #> Lista geral dos indicadores por Programa
 indicadores <- read.xlsx("data/indicadores_planejamento.xlsx", sep.names = " ") %>%
@@ -94,9 +107,8 @@ indicadores <- read.xlsx("data/indicadores_planejamento.xlsx", sep.names = " ") 
 
 #> Lista geral das açoes
 acoes <- read.xlsx("data/acoes_planejamento.xlsx", sep.names = " ") %>%
-  select(1,2, `Título da Ação`, 39:46) %>%
-  mutate(across(2:3, str_to_sentence))
-
+  mutate(`Nome do Programa` = gsub("#", "", `Nome do Programa`)) %>%
+  select(`Nome do Programa`, `Código da Ação`, `Título da Ação`, `Finalidade da Ação`, 40,44)
 
 #> Programa, Unidade, Indicador, ODS Vinculado, Orçamento, Tabela com ação e orçamento das ações
 
