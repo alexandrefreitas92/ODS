@@ -173,7 +173,7 @@ server <- function(input, output, session) {
       txt_orcament <- "Selecione o Programa ao lado."       
     } else {
       txt_orcament <- filter(prog_list, `Nome do Programa` == input$selectProgram)
-      txt_orcament <- txt_orcament$`Previsão Orçamentária 2022`
+      txt_orcament <- txt_orcament$`Previsão Orçamentária 2023`
     }
     paste0(txt_orcament)
   })

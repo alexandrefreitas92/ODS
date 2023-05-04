@@ -16,7 +16,7 @@ painel_prog <- function(df_programas) {
     mainPanel(
         tags$p(tags$strong("Órgão resonsável pelo Programa: "), textOutput("textUnidadeName", inline = TRUE)),
         tags$p(tags$strong("Nome do Programa: "), textOutput("textProgramName", inline = TRUE)),
-        tags$p(tags$strong("Orçamento do Programa: "), textOutput("textProgramOrcament", inline = TRUE)),
+        tags$p(tags$strong("Orçamento do Programa (2023): "), textOutput("textProgramOrcament", inline = TRUE)),
         tags$p(tags$strong("Objetivo Estratégico do Programa: "), textOutput("textProgramObjectiveEstrategic", inline = TRUE)),
         tags$p(tags$strong("Objetivo do Programa: "), textOutput("textProgramObjective", inline = TRUE)),
         tags$p(tags$strong("Indicadores do Programa: "), textOutput("textProgramIndicators", inline = TRUE)),

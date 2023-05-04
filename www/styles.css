@@ -27,7 +27,7 @@
 
 .navbar-default .navbar-brand {
     font-size: 50px;
-    color: #7d7da9;
+    color: #cf2e2e;
 }
 
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
@@ -130,8 +130,8 @@ a:focus, a:hover {
 .voronoys-block span.name {
     position: absolute;
     left: 0;
-    font-size: 12px;
-    font-weight: 400;
+    font-size: 14px;
+    font-weight: 700;
     text-transform: uppercase;
     line-height: 1.2em;
     letter-spacing: 1px;
@@ -139,7 +139,7 @@ a:focus, a:hover {
     padding-top: 10px;
     padding-left: 10px;
     word-break: normal;
-    color: #fff;
+    color: #000000;
     transition: font-weight .4s;
 }
 
@@ -169,6 +169,10 @@ a:focus, a:hover {
 
 .well {
     background-color: #e8ebf5;
+}
+
+.well .h4 {
+  text-align: center;
 }
 
 .selectize-input.full {
@@ -216,6 +220,7 @@ hr {
 
 .logoContainerFooter img {
    height: 50px;
+   margin-right: 20px; /* add some margin */
 }
 
 .h3, h3 {

@@ -1,5 +1,6 @@
 # Library -----------------------------------------------------------------
 library(shiny)
+library(readxl)
 library(tidyverse)
 library(DT)
 library(shinydashboard)
@@ -16,6 +17,7 @@ source("R/main_page.R")
 source("R/programas.R")
 source("R/painel_ods.R")
 source("R/github_link.R")
+source("R/utils.R")
 source("R/server.R", local = TRUE)
 source("ui.R", local = TRUE)
 
@@ -79,36 +81,37 @@ prog_obj_est <- prog %>%
   mutate(`Objetivo Estratégico` = ifelse(`Objetivo Estratégico` == "NÃO HÁ OBJETIVO ESTRATÉGICO VINCULADO.", NA, `Objetivo Estratégico`)) %>%
   group_by(`Código do Programa`, `Nome do Programa`) %>%
   filter(!duplicated(`Objetivo Estratégico`)) %>%
-  summarise(`Objetivo Estratégico` = paste(seq_along(`Objetivo Estratégico`), "-", `Objetivo Estratégico`, sep = " ")) %>%
-  summarise(`Objetivo Estratégico` = str_flatten(`Objetivo Estratégico`, collapse = " ")) %>%
+  mutate(`Objetivo Estratégico` = paste(seq_along(`Objetivo Estratégico`), "-", `Objetivo Estratégico`, sep = " ")) %>%
+  summarise(`Objetivo Estratégico` = str_flatten(`Objetivo Estratégico`, collapse = " "), .groups = 'drop') %>%
   mutate(`Objetivo Estratégico` = ifelse(str_detect(`Objetivo Estratégico`, "1 - NA"), "NÃO HÁ OBJETIVO ESTRATÉGICO VINCULADO.", `Objetivo Estratégico`))
+
   
 #> Lista geral dos Programas
 prog_list <- prog %>%
   group_by(`Código do Programa`, `Nome do Programa`) %>%
   summarise(`Órgão Responsável pelo Programa` = first(`Órgão Responsável pelo Programa`), 
-            `Previsão Orçamentária 2022` = first(`Previsão Orçamentária 2022`),
+            `Previsão Orçamentária 2023` = first(`Previsão Orçamentária 2023`),
             Objetivo = first(Objetivo)
             ) %>%
-  mutate(`Previsão Orçamentária 2022` = format(`Previsão Orçamentária 2022`, big.mark = ".", decimal.mark = ","),
-         `Previsão Orçamentária 2022` = paste("R$", `Previsão Orçamentária 2022`)
+  mutate(`Previsão Orçamentária 2023` = format(`Previsão Orçamentária 2023`, big.mark = ".", decimal.mark = ","),
+         `Previsão Orçamentária 2023` = paste("R$", `Previsão Orçamentária 2023`)
          ) %>%
   left_join(prog_obj_est, by = c("Código do Programa", "Nome do Programa"))
 
 
 #> Lista geral dos indicadores por Programa
-indicadores <- read.xlsx("data/indicadores_planejamento.xlsx", sep.names = " ") %>%
+indicadores <- read_xls("data/indicadores_planejamento.xls") %>%
   mutate(across(c(2, 4), str_to_sentence)) %>%
   group_by(`Código do Programa`, `Nome do Programa`) %>%
-  summarise(Indicador = paste(seq_along(Indicador), "-", Indicador, sep = " ")) %>%
-  summarise(Indicador = str_flatten(Indicador, collapse = ". "))
+  mutate(Indicador = paste(seq_along(Indicador), "-", Indicador, sep = " ")) %>%
+  summarise(Indicador = str_flatten(Indicador, collapse = ". "), .groups = 'drop')
 
 #  summarise(Indicador = str_flatten(Indicador, collapse = "; "))
 
 #> Lista geral das açoes
-acoes <- read.xlsx("data/acoes_planejamento.xlsx", sep.names = " ") %>%
+acoes <- read_xls("data/acoes_planejamento.xls") %>%
   mutate(`Nome do Programa` = gsub("#", "", `Nome do Programa`)) %>%
-  select(`Nome do Programa`, `Código da Ação`, `Título da Ação`, `Finalidade da Ação`, 40,44)
+  select(`Nome do Programa`, `Código da Ação`, `Título da Ação`, `Finalidade da Ação`, `Previsão Orçamentária 2023`, `Previsão Física 2023`)
 
 #> Programa, Unidade, Indicador, ODS Vinculado, Orçamento, Tabela com ação e orçamento das ações
 
