@@ -1,6 +1,6 @@
 # Library -----------------------------------------------------------------
-library(shiny)
 library(readxl)
+library(shiny)
 library(tidyverse)
 library(DT)
 library(shinydashboard)
@@ -72,7 +72,7 @@ ods_lista<-prog %>%
   distinct(ODS)
 prog_ods <- prog %>%
   group_by(`Código do Programa`, `Nome do Programa`) %>%
-  summarise(ODS = str_flatten(ODS, collapse = "; "))
+  summarise(ODS = str_flatten(unique(ODS), collapse = "; "))
 
 row.names(prog) <- 1:nrow(prog)
 
