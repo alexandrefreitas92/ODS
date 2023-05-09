@@ -50,9 +50,16 @@ painel_prog <- function(df_programas) {
                  )
                ),
       tabPanel("Orçamento por ODS", 
-               tags$br(), # Adicione uma quebra de linha
-               h3("Orçamento dos Programas de Governo do ano de 2023 por ODS"),
-               "Em construção"
+               tags$br(), # Add a line break
+               div(style = "text-align: center;", # Center the text
+                   br(),
+                   wellPanel(
+                     div(HTML("<h1><b>Orçamento dos Programas de Governo do ano de 2023 por ODS</b></h1>")),
+                     br(),
+                     div(HTML("<h4>Atenção para o fato de que os Programas que possuem mais de um ODS tiveram seu orçamento contabilizado mais de uma vez, ou seja, o orçamento total pode ser maior do que o orçamento do Estado.</h4>")),
+                     style = "text-align: center;"
+                   )),
+               plotlyOutput("plot_ods_budget")
                )
       )
     )

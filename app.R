@@ -112,6 +112,44 @@ acoes <- read.xlsx("data/acoes_planejamento.xlsx", sep.names = " ") %>%
   mutate(`Nome do Programa` = gsub("#", "", `Nome do Programa`)) %>%
   select(`Nome do Programa`, `Código da Ação`, `Título da Ação`, `Finalidade da Ação`, `Previsão Orçamentária 2023`, `Previsão Física 2023`)
 
+#> Orçamento por ODS
+
+ods_orc_programa <- prog %>%
+  filter(!is.na(ODS)) %>%
+  group_by(`Código do Programa`, `Nome do Programa`, ODS) %>%
+  summarise(`Previsão Orçamentária 2023` = first(`Previsão Orçamentária 2023`)
+  ) %>%
+  group_by(ODS) %>%
+  summarise(`Orçamento por ODS (2023)` = sum(`Previsão Orçamentária 2023`),
+            orc_M = round(`Orçamento por ODS (2023)` / 1000000, 0),
+            orc_M = format(orc_M, big.mark = ".", decimal.mark = ","))
+
+# Define the colors for each SDG
+sdg_colors <- c("#E5243B", "#DDA63A", "#4C9F38", "#C5192D", "#FF3A21",
+                "#26BDE2", "#FCC30B", "#A21942", "#FD6925", "#DD1367",
+                "#FD9D24", "#BF8B2E", "#3F7E44", "#0A97D9", "#56C02B",
+                "#00689D", "#19486A")
+
+plot_orc_ods <- plot_ly(data = ods_orc_programa,
+                x = ~`Orçamento por ODS (2023)`,
+                y = ~ODS,
+                type = 'bar',
+                #  text = ~ODS,
+                customdata = ~orc_M, # Specify the custom data column
+                hovertemplate = 'Total: R$ %{customdata} Milhões<extra></extra>', # Use the new column for hover text
+                #  hoverinfo = 'x',
+                marker = list(color = sdg_colors[ods_orc_programa$ODS],
+                              line = list(color = sdg_colors[ods_orc_programa$ODS], width = 1.5)),
+                width = 1600
+) %>%
+  layout(title = "Orçamento por ODS (2023)",
+         xaxis = list(title = ""),
+         yaxis = list(title = "",
+                      autorange = "reversed",
+                      title_standoff = 15 # Add some space between the y-axis title and the graph
+                      ),
+         margin = list(l = "auto", r = "auto") # Set the left and right margins to "auto"
+         )
 #> Programa, Unidade, Indicador, ODS Vinculado, Orçamento, Tabela com ação e orçamento das ações
 
 

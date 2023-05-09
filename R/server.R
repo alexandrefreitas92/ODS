@@ -22,6 +22,13 @@ server <- function(input, output, session) {
   output$name <- renderText({
     input$name
   })
+  
+
+# ODS Budget --------------------------------------------------------------
+
+  output$plot_ods_budget <- renderPlotly({
+    plot_orc_ods
+  })
 
 # ODS Action Buttons ------------------------------------------------------
   observeEvent(input$ods1_button, {
