@@ -10,6 +10,7 @@ library(bslib)
 library(lubridate)
 library(scales)
 library(shinyBS)
+library(plotly)
 
 # Load scripts ------------------------------------------------------------
 source("R/main_page.R")
