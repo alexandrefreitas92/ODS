@@ -1,5 +1,5 @@
 # Library -----------------------------------------------------------------
-library(readxl)
+
 library(shiny)
 library(tidyverse)
 library(DT)
@@ -10,7 +10,6 @@ library(bslib)
 library(lubridate)
 library(scales)
 library(shinyBS)
-
 
 # Load scripts ------------------------------------------------------------
 source("R/main_page.R")
@@ -100,7 +99,7 @@ prog_list <- prog %>%
 
 
 #> Lista geral dos indicadores por Programa
-indicadores <- read_xls("data/indicadores_planejamento.xls") %>%
+indicadores <- read.xlsx("data/indicadores_planejamento.xlsx", sep.names = " ") %>%
   mutate(across(c(2, 4), str_to_sentence)) %>%
   group_by(`Código do Programa`, `Nome do Programa`) %>%
   mutate(Indicador = paste(seq_along(Indicador), "-", Indicador, sep = " ")) %>%
@@ -109,7 +108,7 @@ indicadores <- read_xls("data/indicadores_planejamento.xls") %>%
 #  summarise(Indicador = str_flatten(Indicador, collapse = "; "))
 
 #> Lista geral das açoes
-acoes <- read_xls("data/acoes_planejamento.xls") %>%
+acoes <- read.xlsx("data/acoes_planejamento.xlsx", sep.names = " ") %>%
   mutate(`Nome do Programa` = gsub("#", "", `Nome do Programa`)) %>%
   select(`Nome do Programa`, `Código da Ação`, `Título da Ação`, `Finalidade da Ação`, `Previsão Orçamentária 2023`, `Previsão Física 2023`)
 
